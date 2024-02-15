@@ -20,7 +20,8 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 // Simple file upload route
-app.post('/upload', upload.single('file'), (req, res, next) => {
+app.post('/upload', upload.any(), (req, res, next) => {
+    console.log('uploading....')
   const file = req.file;
   if (!file) {
     const error = new Error('Please upload a file');
@@ -30,6 +31,10 @@ app.post('/upload', upload.single('file'), (req, res, next) => {
   res.send(file);  // You can send a JSON response or any other response here
 })
 
+process.on('uncaughtException', (err) => {
+    console.error('Uncaught Exception:', err);
+    process.exit(1); // Exit with failure code
+  });
 // Start the server
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
