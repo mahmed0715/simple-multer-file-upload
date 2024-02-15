@@ -4,7 +4,7 @@ const app = express();
 const port = 3001;
 
 // Enable file upload middleware
-app.use(fileUpload());
+app.use(fileUpload({debug: true}));
 
 // the HTML form for file upload
 app.get('/', (req, res) => {
