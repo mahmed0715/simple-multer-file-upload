@@ -50,6 +50,10 @@ const upload = multer({
   limits: { fileSize: 1000000 }, // Limit file size if required
   fileFilter: function (req, file, cb) {
     checkFileType(file, cb);
+  },
+  onError : function(err, next) {
+    console.log(' multer error', err);
+    next(err);
   }
 }).array('file', 10); // Modify the multer initialization
 
@@ -76,6 +80,7 @@ app.use((req, res, next) => {
 
 // Simple file upload route
 app.post('/upload', (req, res) => {
+    console.log("upload api called inner")
   upload(req, res, (err) => {
     if (err) {
       console.error(err); // Log the error
