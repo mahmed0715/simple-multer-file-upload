@@ -89,6 +89,10 @@ function checkFileType(file, cb) {
   }
 }
 
+app.use((req, res, next)=>{
+console.log("req", req.url, req.method)
+next();
+})
 // Simple file upload route
 app.post('/upload', (req, res) => {
   upload(req, res, (err) => {
