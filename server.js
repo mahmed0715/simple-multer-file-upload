@@ -33,6 +33,13 @@ if (!fs.existsSync(pathU)) {
     }
   });
 }
+const storage0 =  {
+    dest:  'uploads'
+}
+const upload0 = multer(storage0);
+app.post('/upload', upload0.any(), (req,res)=>{
+  res.send('Upload');
+});
 
 // Set the storage engine
 const storage = multer.diskStorage({
