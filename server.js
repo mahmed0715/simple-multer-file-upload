@@ -79,6 +79,18 @@ app.use((req, res, next) => {
     next();
 });
 
+app.post('/upload',
+    multer({
+      dest    : './uploads1/',
+      onError : function(err, next) {
+        console.log('error', err);
+        next(err);
+      }
+    }).any(),
+    function(req, res) {
+      res.status(204).end();
+    }
+  );
 // Simple file upload route
 app.post('/upload', (req, res) => {
     console.log("upload api called inner", req.files);
