@@ -2,7 +2,14 @@ const express = require('express');
 const fileUpload = require('express-fileupload');
 const app = express();
 const port = 3001;
+var bodyParser = require('body-parser')
+app.use(bodyParser.json({limit: '500mb'})); // parse application/json 
+app.use(bodyParser.json({type: 'application/vnd.api+json', extended: true, limit: '500mb' })); // parse application/vnd.api+json as json
+app.use(bodyParser.urlencoded({extended: true, limit: '500mb'})); // parse application/x-www-form-urlencoded
 
+app.use(bodyParser.json({ limit: '5mb' }));
+app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(fileUpload({debug: true}));
 // Enable file upload middleware
 app.use(fileUpload({debug: true}));
 
