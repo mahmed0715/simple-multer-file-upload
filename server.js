@@ -37,7 +37,7 @@ const storage0 =  {
     dest:  'uploads'
 }
 const upload0 = multer(storage0);
-app.post('/upload', upload0.any(), (req,res)=>{
+app.post('/upload0', upload0.any(), (req,res)=>{
   res.send('Upload');
 });
 
@@ -62,7 +62,7 @@ const upload = multer({
     console.log(' multer error', err);
     next(err);
   }
-}).array('file', 10); // Modify the multer initialization
+}).any(); // Modify the multer initialization
 
 // Check file type
 function checkFileType(file, cb) {
@@ -88,7 +88,7 @@ app.use((req, res, next) => {
 // Simple file upload route
 app.post('/upload', (req, res) => {
     console.log("upload api called inner")
-  upload(req, res, (err) => {
+  upload0(req, res, (err) => {
     if (err) {
       console.error(err); // Log the error
       res.status(400).json({ error: err });
