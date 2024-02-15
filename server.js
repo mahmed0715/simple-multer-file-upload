@@ -1,45 +1,3 @@
-// const express = require('express');
-// const multer  = require('multer');
-// const path = require('path');
-
-// const app = express();
-// const port = 3000;
-
-// app.use(express.static('public'));
-
-// // Set up multer disk storage
-// const storage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, 'uploads/') // Uploads folder
-//   },
-//   filename: function (req, file, cb) {
-//     cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
-//   }
-// })
-
-// const upload = multer({ storage: storage });
-
-// // Simple file upload route
-// app.post('/upload', upload.any(), (req, res, next) => {
-//     console.log('uploading....')
-//   const file = req.file;
-//   if (!file) {
-//     const error = new Error('Please upload a file');
-//     error.httpStatusCode = 400;
-//     return next(error);
-//   }
-//   res.send(file);  // You can send a JSON response or any other response here
-// })
-
-// process.on('uncaughtException', (err) => {
-//     console.error('Uncaught Exception:', err);
-//     process.exit(1); // Exit with failure code
-//   });
-// // Start the server
-// app.listen(port, () => {
-//   console.log(`Server is running on port ${port}`);
-// });
-
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
@@ -58,7 +16,7 @@ app.use(express.static('public'));
 const pathU = './uploads';
 
 // Check if the directory exists
-if (!fs.existsSync(path)) {
+if (!fs.existsSync(pathU)) {
   // If it doesn't exist, create it
   fs.mkdir(pathU, { recursive: true }, (err) => {
     if (err) {
@@ -74,7 +32,8 @@ if (!fs.existsSync(path)) {
       });
     }
   });
-} 
+}
+
 // Set the storage engine
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -92,7 +51,7 @@ const upload = multer({
   fileFilter: function (req, file, cb) {
     checkFileType(file, cb);
   }
-}).any();
+}).array('file', 10); // Modify the multer initialization
 
 // Check file type
 function checkFileType(file, cb) {
@@ -106,14 +65,15 @@ function checkFileType(file, cb) {
   if (mimetype && extname) {
     return cb(null, true);
   } else {
-    cb('Error: Images Only!');
+    return cb('Error: Images Only!'); // Add return statement here
   }
 }
 
-app.use((req, res, next)=>{
-console.log("req", req.url, req.method)
-next();
-})
+app.use((req, res, next) => {
+  console.log("req", req.url, req.method)
+  next();
+});
+
 // Simple file upload route
 app.post('/upload', (req, res) => {
   upload(req, res, (err) => {
@@ -121,12 +81,12 @@ app.post('/upload', (req, res) => {
       console.error(err); // Log the error
       res.status(400).json({ error: err });
     } else {
-        console.log("files", req.files, req.file)
-      if (req.files === undefined) {
+      console.log("files", req.files); // Log the uploaded files (note: req.files, not req.file)
+      if (req.files.length === 0) { // Correct condition for if no file was selected
         res.status(400).json({ error: 'Error: No File Selected!' });
       } else {
-        console.log(req.files); // Log the uploaded file
-        res.status(200).json({ message: 'File Uploaded Successfully!', file: req.files });
+        console.log(req.files); // Log the uploaded files
+        res.status(200).json({ message: 'Files Uploaded Successfully!', files: req.files });
       }
     }
   });
@@ -142,4 +102,3 @@ app.use((err, req, res, next) => {
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
-
