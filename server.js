@@ -36,7 +36,7 @@ if (!fs.existsSync(pathU)) {
 const storage0 =  {
     dest:  'uploads'
 }
-const upload0 = multer(storage0);
+const upload0 = multer(storage0).any();
 app.post('/upload0', upload0.any(), (req,res)=>{
   res.send('Upload');
 });
