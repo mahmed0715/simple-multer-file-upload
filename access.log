@@ -1,0 +1,8 @@
+::1 - - [15/Feb/2024:09:01:25 +0000] "GET /index.html HTTP/1.1" 200 1036 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+::1 - - [15/Feb/2024:09:01:27 +0000] "GET /favicon.ico HTTP/1.1" 404 150 "http://localhost:3000/index.html" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+::1 - - [15/Feb/2024:09:01:29 +0000] "POST /upload HTTP/1.1" 400 36 "http://localhost:3000/index.html" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+::1 - - [15/Feb/2024:09:02:14 +0000] "POST /upload HTTP/1.1" 400 36 "http://localhost:3000/index.html" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+::1 - - [15/Feb/2024:09:02:16 +0000] "GET /index.html HTTP/1.1" 304 - "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+::1 - - [15/Feb/2024:09:02:20 +0000] "POST /upload HTTP/1.1" 400 36 "http://localhost:3000/index.html" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+::1 - - [15/Feb/2024:09:03:10 +0000] "POST /upload HTTP/1.1" 400 36 "http://localhost:3000/index.html" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+::1 - - [15/Feb/2024:09:03:31 +0000] "POST /upload HTTP/1.1" 200 284 "http://localhost:3000/index.html" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
