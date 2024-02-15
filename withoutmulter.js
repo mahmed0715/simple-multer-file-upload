@@ -9,9 +9,14 @@ app.use(bodyParser.urlencoded({extended: true, limit: '500mb'})); // parse appli
 
 app.use(bodyParser.json({ limit: '5mb' }));
 app.use(bodyParser.urlencoded({ extended: false }));
+const multer = require('multer');
+const upload = multer({dest: "data"});
+
+app.use(bodyParser.raw());
+
 // app.use(fileUpload({debug: true}));
 // Enable file upload middleware
-app.use(fileUpload({debug: true}));
+// app.use(fileUpload({debug: true}));
 
 // the HTML form for file upload
 app.get('/', (req, res) => {
@@ -24,21 +29,22 @@ app.get('/', (req, res) => {
 });
 
 // Handle the file upload
-app.post('/upload', (req, res) => {
+app.post('/upload', upload.any(), (req, res) => {
   if (!req.files || Object.keys(req.files).length === 0) {
     return res.status(400).send('No files were uploaded.');
   }
+  console.log(req.files)
 
-  const file = req.files.file;
+  const file = req.files;
   const uploadDir = './uploads';
 
-  file.mv(`${uploadDir}/${file.name}`, (err) => {
-    if (err) {
-      return res.status(500).send(err);
-    }
+//   file.mv(`${uploadDir}/${file.name}`, (err) => {
+//     if (err) {
+//       return res.status(500).send(err);
+//     }
 
     res.json(file);
-  });
+//   });
 });
 
 app.listen(port, () => {
