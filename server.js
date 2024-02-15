@@ -54,10 +54,31 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'),
 // Setup the logger
 app.use(morgan('combined', { stream: accessLogStream }));
 app.use(express.static('public'));
+
+const pathU = './uploads';
+
+// Check if the directory exists
+if (!fs.existsSync(path)) {
+  // If it doesn't exist, create it
+  fs.mkdir(pathU, { recursive: true }, (err) => {
+    if (err) {
+      console.error('Error creating upload directory:', err);
+    } else {
+      // Set permissions for the directory
+      fs.chmod(pathU, 0o755, (err) => {
+        if (err) {
+          console.error('Error setting permissions for upload directory:', err);
+        } else {
+          console.log('Upload directory created with permissions set successfully');
+        }
+      });
+    }
+  });
+} 
 // Set the storage engine
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/');
+    cb(null, './uploads/');
   },
   filename: function (req, file, cb) {
     cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
