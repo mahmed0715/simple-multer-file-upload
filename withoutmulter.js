@@ -14,7 +14,7 @@ const upload = multer({dest: "data"});
 
 app.use(bodyParser.raw());
 
-// app.use(fileUpload({debug: true}));
+app.use(fileUpload({debug: true}));
 // Enable file upload middleware
 // app.use(fileUpload({debug: true}));
 
@@ -23,14 +23,15 @@ app.get('/', (req, res) => {
   res.send(`
     <form action="/upload" method="post" enctype="multipart/form-data">
       <input type="file" name="file" />
+      <input type="text" value="dsaasd" name="name">
       <input type="submit" value="Upload" />
     </form>
   `);
 });
 
 // Handle the file upload
-app.use((req, res, next)=>{console.log({body: req.body}); next()})
-app.post('/upload', upload.any(), (req, res) => {
+app.use((req, res, next)=>{console.log({body: JSON.stringify(req.body)}); next()})
+app.post('/upload', (req, res) => {
   if (!req.files || Object.keys(req.files).length === 0) {
     return res.status(400).send('No files were uploaded.');
   }

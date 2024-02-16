@@ -16,9 +16,9 @@ app.use(bodyParser.json({ limit: '5mb' }));
 app.use(bodyParser.urlencoded({ extended: false }));
 
 const storage = multer.diskStorage({ destination: 'uploads/' }); // Provide the destination directory for uploaded files
-const upload2 = multer({ storage: storage }).single('file'); // Use single() to indicate that this endpoint only expects a single file with the name 'file'
+const upload2 = multer({ storage: storage }).any(); // Use single() to indicate that this endpoint only expects a single file with the name 'file'
 app.post('/upload2', (req, res) => {
-  console.log(req.body);
+  console.log(req.body, req.body.name);
   upload2(req, res, function (err) {
     if (err instanceof multer.MulterError) {
       // A Multer error occurred when uploading.
@@ -28,7 +28,7 @@ app.post('/upload2', (req, res) => {
       res.status(500).json({ error: err.message });
     } else {
       // Everything went fine. Access the file through req.file and other form fields through req.body
-      console.log(req.file); // File information
+      console.log(req.files, req.file); // File information
       console.log(req.body.name); // Other form field
       res.send('File Upload Successful');
     }
