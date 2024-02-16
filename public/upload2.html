@@ -1,26 +1,29 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>File Upload Form</title>
+<head  <title>File Upload Form</title>
 </head>
 <body>
   <h2>Upload a File</h2>
-  <form id="uploadForm" action="http://your_domain_or_ip:3000/upload" method="post" enctype="multipart/form-data">
+  <form id="uploadForm" enctype="multipart/form-data">
     <input type="file" name="file" />
+    <input type="text" name="name">
     <input type="submit" value="Upload" />
   </form>
 
   <script>
     document.getElementById('uploadForm').addEventListener('submit', function(e) {
       e.preventDefault();
-      var formData = new FormData(this);
+      var formData = new FormData();
+      var fileInput = document.querySelector('input[type="file"]');
+      formData.append('file', fileInput.files[0]);
+      formData.append('name', this.name.value);
       fetch('/upload2', {
-        method: 'POST',
+ method: 'POST',
         body: formData
       })
       .then(response => response.text())
       .then(data => {
-        alert(data); // Show the response message
+        alert(data); // Show the response
       })
       .catch(error => {
         console.error('Error:', error);
