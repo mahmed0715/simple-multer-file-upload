@@ -43,8 +43,8 @@ app.post('/upload0', upload0, (req, res) => {
 
 // Set the storage engine
 const storage = multer.diskStorage({
-    dest: function (req, file, cb) {
-        cb(null, './uploads/');
+    destination: function (req, file, cb) {
+        cb(null, 'uploads');
     },
   
 });
@@ -81,7 +81,7 @@ app.use((req, res, next) => {
 
 app.post('/upload',
     multer({
-      dest    : './uploads1/',
+      dest    : 'uploads',
       onError : function(err, next) {
         console.log('error', err);
         next(err);

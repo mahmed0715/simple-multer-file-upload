@@ -5,7 +5,7 @@ const app = express();
 
 app.use(express.static('public'))
 // Multer upload configuration
-const storage = multer.memoryStorage();
+const storage = multer.diskStorage({destination: 'u'});
 const upload = multer({ storage: storage });
 
 // Body parser middleware
@@ -22,5 +22,5 @@ app.post('/upload2', upload.single('file'), (req, res) => {
 
 // Start server
 app.listen(3002, () => {
-  console.log('Server running on port 3000');
+  console.log('Server running on port 3002');
 });
