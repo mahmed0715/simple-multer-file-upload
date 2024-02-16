@@ -43,7 +43,7 @@ app.post('/upload0', upload0, (req, res) => {
 
 // Set the storage engine
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
+    dest: function (req, file, cb) {
         cb(null, './uploads/');
     },
   
